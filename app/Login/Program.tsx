@@ -40,7 +40,7 @@ export default function Program() {
   const fetchPrograms = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch('http://10.150.38.124:3001/advisors');
+      const response = await fetch('http://10.0.0.60:3001/advisors');
       if (!response.ok) throw new Error('Failed to fetch programs');
       const data: Advisor[] = await response.json();
       

@@ -1,11 +1,13 @@
 import { Pool } from 'pg';
+import dotenv from 'dotenv';
 
+// Load environment variables from .env file
+dotenv.config();
+
+// Use DATABASE_URL environment variable for connection
 const pool = new Pool({
-    user: 'patelm', // replace with your PostgreSQL username
-    host: 'localhost',      // replace with your PostgreSQL host
-    database: 'satsDB', // replace with your PostgreSQL database name
-    password: '12345678', // replace with your PostgreSQL password
-    port: 5432,             // default PostgreSQL port
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
 export default pool;

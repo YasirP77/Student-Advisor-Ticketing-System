@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  
+  auth-service:
+    env_file:
+      - ./services/.env
+    build: .
+    command: npx ts-node services/authService.ts
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+
+  fetch-service:
+    env_file:
+      - ./services/.env
+    build: .
+    command: npx ts-node services/fetchProgramService.ts
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./.env:/app/.env
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+
+  db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=patelm
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=satsDB
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
